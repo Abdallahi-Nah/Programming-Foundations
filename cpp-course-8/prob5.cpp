@@ -78,11 +78,19 @@ void printMonthCalendar(int year, int month) {
     cout << "\n___________________________________________________\n";
 }
 
+void printYearCalendar(int year) {
+    for(int i=1; i <= 12; i++) {
+        printMonthCalendar(year, i);
+    }
+}
 int main() {
     int year = readYear();
-    int month = readMonth();
+    // int month = readMonth();
+    cout << "\n_______________________________________________\n\n";
+    cout << "\t\t Calendar - " << year << "\t\t";
+    cout << "\n_______________________________________________\n";
 
-    printMonthCalendar(year, month);
+    printYearCalendar(year);
 
     return 0;
 }
