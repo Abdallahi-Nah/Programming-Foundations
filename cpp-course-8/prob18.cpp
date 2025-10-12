@@ -64,7 +64,7 @@ bool isItWeekend(int dayNumber) {
 }
 
 bool isItBuisnessDay(int dayNumber) {
-    return (dayNumber >= 1 && dayNumber <= 5);
+    return !isItWeekend(dayNumber);
 }
 
 int daysUntilTheEndOfWeek(int dayNumber) {
