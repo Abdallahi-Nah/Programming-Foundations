@@ -66,7 +66,6 @@ short compareDates(sDate date1, sDate date2) {
         return 1;
 }
 
-
 bool isOverlapDates(sPeriod period1, sPeriod period2) {
     if((compareDates(period2.date2, period1.date1) == -1) 
         || (compareDates(period1.date2, period2.date1) == -1)) {

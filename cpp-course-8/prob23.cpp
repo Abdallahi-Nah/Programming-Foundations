@@ -81,5 +81,18 @@ int getTotalDays(sDate date) {
 }
 
 int main() {
+    sPeriod period1;
+
+    cout << "\n\nEnter Period 1:\n";
+    cout << "\nEnter Start Date\n\n";
+    period1.date1 = readDate();
+    cout << "\nEnter End Date\n\n";
+    period1.date2 = readDate();
+
+    int period1Length = getTotalDays(period1.date2) - getTotalDays(period1.date1);
+
+    cout << "\nPeriod Length is: " << period1Length << endl;
+    cout << "\nPeriod Length (Including End Date) is: " << (period1Length + 1) << endl;
+
     return 0;
 }
