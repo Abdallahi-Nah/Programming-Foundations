@@ -820,7 +820,6 @@ void ShowMainMenue()
 }
 
 int main()
-
 {
     ShowMainMenue();
     system("pause>0");
