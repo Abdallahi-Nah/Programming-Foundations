@@ -72,8 +72,20 @@ sDate stringToDate(string dateAsString) {
     return date;
 }
 
-string dateToString(sDate date) {
-    return to_string(date.day) + "/" + to_string(date.month) + "/" + to_string(date.year);
+string dateToString(sDate date, string formateDate = "") {
+    if(formateDate == "dd/mm/yy") {
+        return to_string(date.day) + "/" + to_string(date.month) + "/" + to_string(date.year);
+    } else if(formateDate == "yy/dd/mm") {
+        return to_string(date.year) + "/" + to_string(date.day) + "/" + to_string(date.month);
+    } else if(formateDate == "mm/dd/yy") {
+        return to_string(date.month) + "/" + to_string(date.day) + "/" + to_string(date.year);
+    } else if(formateDate == "mm-dd-yy") {
+        return to_string(date.month) + "-" + to_string(date.day) + "-" + to_string(date.year);
+    } else if(formateDate == "dd-mm-yy") {
+        return to_string(date.day) + "-" + to_string(date.month) + "-" + to_string(date.year); 
+    } else {
+        return "Day:"+to_string(date.day)+", Month:"+to_string(date.month)+", Year:"+to_string(date.year);
+    }
 }
 
 int main() {
@@ -81,12 +93,13 @@ int main() {
 
     string dateAsString = readDateAsString();
     date = stringToDate(dateAsString);
-
-    cout << "Day : " << date.day << endl;
-    cout << "Month : " << date.month << endl;
-    cout << "Year : " << date.year << endl;
     
-    cout << "\n\nYour Entered : " << dateToString(date) << endl;
+    cout << dateToString(date, "dd/mm/yy") << endl;
+    cout << dateToString(date, "yy/dd/mm") << endl;
+    cout << dateToString(date, "mm/dd/yy") << endl;
+    cout << dateToString(date, "mm-dd-yy") << endl;
+    cout << dateToString(date, "dd-mm-yy") << endl;
+    cout << dateToString(date) << endl;
 
     return 0;
 }
