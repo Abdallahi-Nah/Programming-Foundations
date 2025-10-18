@@ -664,7 +664,6 @@ void AddNewUsers()
 
 }
 
-
 bool DeleteClientByAccountNumber(string AccountNumber, vector <sClient>& vClients)
 {
 
