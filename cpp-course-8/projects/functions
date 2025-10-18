@@ -1,0 +1,11 @@
+functions of project 1 - course 8 : 
+	1- login()
+	2- manageUsers()
+		a- listUsers()
+		b- addNewUser()
+			- giveUserPermissions()
+		c- deleteUser()
+		d- updateUser()
+		e- findUser()
+		f- mainMenue()
+	3- logout()
