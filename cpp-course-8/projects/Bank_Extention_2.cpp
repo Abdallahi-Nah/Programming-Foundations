@@ -1344,10 +1344,11 @@ bool HasAccess(sUser user, enMainMenueOptions MainMenueOption) {
     }
 }
 
-void ShowDeniedScreen() {
+void ShowDeniedScreen(sUser User) {
     cout << "\n=========================================\n";
-    cout << "You Don't Have Permissions To Access To This Screen";
+    cout << "You Don't Have Permissions To Access \n To This Screen";
     cout << "\n=========================================\n";
+    GoBackToMainMenue(User);
 }
 
 void PerfromMainMenueOption(sUser& User, enMainMenueOptions MainMenueOption)
@@ -1360,7 +1361,7 @@ void PerfromMainMenueOption(sUser& User, enMainMenueOptions MainMenueOption)
         if(HasAccess(User, enMainMenueOptions::eListClients)) {
             ShowAllClientsScreen(); 
         } else {
-            ShowDeniedScreen();
+            ShowDeniedScreen(User);
         }
         GoBackToMainMenue(User);
         break;
@@ -1372,7 +1373,7 @@ void PerfromMainMenueOption(sUser& User, enMainMenueOptions MainMenueOption)
         if(HasAccess(User, enMainMenueOptions::eAddNewClient)) {
             ShowAddNewClientsScreen();
         } else {
-            ShowDeniedScreen();
+            ShowDeniedScreen(User);
         }
         GoBackToMainMenue(User);
         break;
@@ -1384,7 +1385,7 @@ void PerfromMainMenueOption(sUser& User, enMainMenueOptions MainMenueOption)
         if(HasAccess(User, enMainMenueOptions::eDeleteClient)) {
             ShowDeleteClientScreen();
         } else {
-            ShowDeniedScreen();
+            ShowDeniedScreen(User);
         }
         GoBackToMainMenue(User);
         break;
@@ -1396,7 +1397,7 @@ void PerfromMainMenueOption(sUser& User, enMainMenueOptions MainMenueOption)
         if(HasAccess(User, enMainMenueOptions::eUpdateClient)) {
             ShowUpdateClientScreen();
         } else {
-            ShowDeniedScreen();
+            ShowDeniedScreen(User);
         }
         GoBackToMainMenue(User);
         break;
@@ -1408,7 +1409,7 @@ void PerfromMainMenueOption(sUser& User, enMainMenueOptions MainMenueOption)
         if(HasAccess(User, enMainMenueOptions::eFindClient)) {
             ShowFindClientScreen();
         } else {
-            ShowDeniedScreen();
+            ShowDeniedScreen(User);
         }
         GoBackToMainMenue(User);
         break;
@@ -1420,7 +1421,7 @@ void PerfromMainMenueOption(sUser& User, enMainMenueOptions MainMenueOption)
         if(HasAccess(User, enMainMenueOptions::eShowTransactionsMenue)) {
             ShowTransactionsMenue(User);
         } else {
-            ShowDeniedScreen();
+            ShowDeniedScreen(User);
         }
         break;
     }
@@ -1431,7 +1432,7 @@ void PerfromMainMenueOption(sUser& User, enMainMenueOptions MainMenueOption)
         if(HasAccess(User, enMainMenueOptions::eManageUsers)) {
             ShowManageUsersMenue(User);
         } else {
-            ShowDeniedScreen();
+            ShowDeniedScreen(User);
         }
         break;
     }
@@ -1497,7 +1498,6 @@ void Login() {
         if(checkIfUserExist(user)) {
             system("clear");
             ShowMainMenue(user);
-            cout << "User Permissions 2 : " << user.permissions << endl;
             cin.ignore();
             cin.get();
         } else {
