@@ -26,6 +26,53 @@ sClient Client;
 
 void ShowATMMainMenue(sClient client);
 
+string ConvertRecordToLine(sClient Client, string Seperator = "#//#")
+{
+
+    string stClientRecord = "";
+
+    stClientRecord += Client.AccountNumber + Seperator;
+    stClientRecord += Client.PinCode + Seperator;
+    stClientRecord += Client.Name + Seperator;
+    stClientRecord += Client.Phone + Seperator;
+    stClientRecord += to_string(Client.AccountBalance);
+
+    return stClientRecord;
+
+}
+
+vector <sClient> SaveCleintsDataToFile(string FileName, vector <sClient> vClients)
+{
+
+    fstream MyFile;
+    MyFile.open(FileName, ios::out);//overwrite
+
+    string DataLine;
+
+    if (MyFile.is_open())
+    {
+
+        for (sClient C : vClients)
+        {
+
+            if (C.MarkForDelete == false)
+            {
+                //we only write records that are not marked for delete.  
+                DataLine = ConvertRecordToLine(C);
+                MyFile << DataLine << endl;
+
+            }
+
+        }
+
+        MyFile.close();
+
+    }
+
+    return vClients;
+
+}
+
 vector<string> SplitString(string S1, string Delim)
 {
 
@@ -158,10 +205,16 @@ short ReadATMMainMenueOption()
 
 void ShowTotalBalanceScreen()
 {
-
-    cout << "\n==============================================\n";
-    cout << "\nYour Balance is : " << Client.AccountBalance << endl;
-    cout << "\n==============================================\n";
+    vector <sClient> sClients = LoadCleintsDataFromFile(ClientsFileName);
+    
+    for(sClient& C : sClients) {
+        if(C.AccountNumber == Client.AccountNumber) {
+            cout << "\n==============================================\n";
+            cout << "\nYour Balance is : " << C.AccountBalance << endl;
+            cout << "\n==============================================\n";
+            break;
+        }
+    }
 }
 
 short ReadATMQuickWithdrawMenueOption() {
@@ -176,11 +229,24 @@ void QuickWithdraw(double balance) {
     cout << "\n\nAre you sure you want to perform this transaction? y/n? ";
     cin >> res;
 
+    vector <sClient> sClients  = LoadCleintsDataFromFile(ClientsFileName);
+
     if(res == 'y' || res ==  'Y') {
-        if(Client.AccountBalance >= balance) {
-            Client.AccountBalance -= balance;
-            cout << "\n\nDone Successfully, New balance is: " << Client.AccountBalance << endl;
+        for(sClient& C : sClients) {
+            if(C.AccountNumber == Client.AccountNumber) {
+                if(C.AccountBalance >= balance) {
+                    Client.AccountBalance -= balance;
+                    C = Client;
+                    SaveCleintsDataToFile(ClientsFileName, sClients);
+                    cout << "\n\nDone Successfully, New balance is: " << Client.AccountBalance << endl;
+                } else {
+                    cout << "\n\nYour balance insuffussant\n";
+                }
+                break;
+            }
         }
+    } else {
+        GoBackToATMMainMenue(Client);
     }
 }
  
@@ -296,7 +362,14 @@ void ShowDepositScreen() {
         cout << "Enter Deposit balance (positive ( > 0 )) : ";
         cin >>  balance;
     }while(balance <= 0);
-    Client.AccountBalance += balance;
+    vector <sClient> sClients = LoadCleintsDataFromFile(ClientsFileName);
+    for(sClient& C : sClients) {
+        if(C.AccountNumber == Client.AccountNumber) {
+            Client.AccountBalance += balance;
+            C = Client;
+            SaveCleintsDataToFile(ClientsFileName, sClients);
+        }
+    }
 }
 
 void PerfromATMMenueOption(sClient Client, enATMMainMenueOptions ATMMenueOption)
